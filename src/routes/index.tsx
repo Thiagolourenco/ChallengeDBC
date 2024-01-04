@@ -21,7 +21,10 @@ const Routes = () => {
       <Stack.Screen 
         name="Details" 
         component={Details} 
-        options={{ headerBackTitleVisible: false }}
+        options={{ 
+          headerBackTitleVisible: false,
+          headerTitle: "Detalhes"
+        }}
       />
     </Stack.Navigator>
   )

@@ -23,7 +23,7 @@ const Routes = () => {
         component={Details} 
         options={{ 
           headerBackTitleVisible: false,
-          headerTitle: "Detalhes"
+          headerTitle: "Dea"
         }}
       />
     </Stack.Navigator>

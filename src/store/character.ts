@@ -6,7 +6,6 @@ import { RickAndMortyApiResponse } from "../@types/character";
 import { CharacterType } from "../@types/store";
 
 const fetchData = async (id: string) => {
-  console.log("ID => ", id)
   const { data, loading, error } = await client.query<RickAndMortyApiResponse>({
     query: gql`
        query Character($characterId: ID!) {
@@ -37,7 +36,6 @@ const fetchData = async (id: string) => {
     }
   });
 
-  console.log("DATA -====> ", data)
   return { data: data.character, loading, error};
 };
 
@@ -48,7 +46,6 @@ const useCharacterStore = create<CharacterType>(set => ({
   fetchCharacter: async (id) => {
     const { loading, error, data } = await fetchData(id);
 
-    console.log("ERROR", error)
     set(() => ({ 
       data, 
       loading, 

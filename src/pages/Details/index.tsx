@@ -1,36 +1,48 @@
-import { useRoute } from '@react-navigation/native'
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import React, { useEffect } from 'react'
-import { View, Text, Image } from 'react-native'
+import { View, Text } from 'react-native'
 
-import { Loading } from '../../components'
+import { Button, Loading } from '../../components'
 import useCharacterStore from '../../store/character'
+import { RouterListTypes } from '../../@types'
+
+import { Container, Image, Content, TextName, TextInfo, Row} from './styles'
+
+type ProfileScreenRouteProp = RouteProp<RouterListTypes, 'Details'>;
 
 const Details = () => {
-  const { params } = useRoute()
-  const { data, error, fetchCharacter, loading } = useCharacterStore()
+  const { params } = useRoute<ProfileScreenRouteProp>()
+  const { goBack } = useNavigation()
 
-  console.log("params", params)
+  const { data, error, fetchCharacter, loading } = useCharacterStore()
  
   useEffect(() => {
     fetchCharacter(String(params.id))
   }, [])
   
   return (
-    <View style={{  alignItems: "center", backgroundColor: "#ffffff", flex: 1}}>
+    <Container>
       {loading ? (
         <Loading />
       ) : (
         <>
-          <Image source={{ uri: data?.image}} style={{ height: 300, width: 300, borderRadius: 8, marginTop: 16 }}  />
-          <Text>{data?.name}</Text>
-          <Text>Localização: {data?.location.name}</Text>
-          <Text>status: {data?.status}</Text>
-          <Text>espécie: {data?.species}</Text>
-          <Text>Total de Epísodios: {data?.episode.length}</Text>
+          <Image source={{ uri: data?.image }} />
+          <Content>
+            <TextName>{data?.name}</TextName>
+            <TextInfo>Localização: {data?.location.name}</TextInfo>
+            <Row>
+              <TextInfo>Status: {data?.status} -- </TextInfo>
+              <TextInfo>Espécie: {data?.species}</TextInfo>
+            </Row>
+          
+            <TextInfo>Total de Epísodios: {data?.episode.length}</TextInfo>
+          </Content>
+       
+          <Button text='Voltar' onPress={() => goBack()} />
         </>
       )}
  
-    </View>
+    </Container>
   )
 }
 

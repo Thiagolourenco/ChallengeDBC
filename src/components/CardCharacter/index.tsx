@@ -1,12 +1,14 @@
 import React from 'react'
 
-import { Character } from '../../pages/Home'
 import { CardContainer, CardImage, CardText  } from './styles'
 import Button from '../Button'
-import { useNavigation } from '@react-navigation/native'
+import { RouteProp, useNavigation } from '@react-navigation/native'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+import { RouterListTypes } from '../../@types'
+import { Character } from '../../store/characters'
 
 const CardCharacter = (item: Character) => {
-  const { navigate } = useNavigation()
+  const { navigate } = useNavigation<NativeStackNavigationProp<RouterListTypes, 'Details'>>()
 
   return (
     <CardContainer onPress={() => navigate("Details", { id: item.id })}>

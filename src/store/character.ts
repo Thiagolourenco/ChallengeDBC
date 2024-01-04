@@ -16,6 +16,9 @@ interface Origin {
 export interface Character {
   gender: string;
   created: string;
+  episode: {
+    id: number
+  }[]
   image: string;
   id: string;
   name: string;
@@ -48,7 +51,6 @@ const fetchData = async (id: string) => {
             created
             episode {
               id
-              name
             }
             gender
             image
@@ -72,7 +74,7 @@ const fetchData = async (id: string) => {
     }
   });
 
-  console.log("DATA", data)
+  console.log("DATA -====> ", data)
   return { data: data.character, loading, error};
 };
 
@@ -83,6 +85,7 @@ const useCharacterStore = create<CharactersType>(set => ({
   fetchCharacter: async (id) => {
     const { loading, error, data } = await fetchData(id);
 
+    console.log("ERROR", error)
     set(() => ({ 
       data, 
       loading, 

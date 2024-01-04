@@ -35,7 +35,7 @@ const Details = () => {
               <TextInfo>Espécie: {data?.species}</TextInfo>
             </Row>
           
-            <TextInfo>Total de Epísodios: {data?.episode.length}</TextInfo>
+            <TextInfo>Total de Epísodios: {data?.episode?.length}</TextInfo>
           </Content>
        
           <Button text='Voltar' onPress={() => goBack()} />

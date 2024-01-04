@@ -1,6 +1,7 @@
 import styled from 'styled-components/native'
+import Animated from 'react-native-reanimated';
 
-export const Container = styled.View`
+export const Container = styled(Animated.View)`
   align-items: center; 
   background-color: #ffffff;
   flex: 1;

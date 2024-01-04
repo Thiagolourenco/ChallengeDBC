@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { ButtonView, ButtonViewText } from './styles'
 
@@ -8,6 +8,7 @@ interface IButton {
 }
 
 const Button = ({ text, onPress }: IButton) => {
+  
   return (
     <ButtonView onPress={onPress}>
       <ButtonViewText>{text}</ButtonViewText>

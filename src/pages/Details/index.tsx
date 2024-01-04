@@ -1,6 +1,6 @@
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import React, { useEffect } from 'react'
-import { View, Text } from 'react-native'
+import { Easing, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 
 import { Button, Loading, ViewError } from '../../components'
 import useCharacterStore from '../../store/character'
@@ -20,13 +20,29 @@ const Details = () => {
     fetchCharacter(String(params.id))
   }, [])
 
+  const opacity = useSharedValue(0);
+
+  useEffect(() => {
+    opacity.value = 1;
+  }, [opacity]);
+
+  const styleViewCard = useAnimatedStyle(() => {
+    return {
+      opacity: withTiming(opacity.value, {
+        duration: 10000,
+        easing: Easing.bezier(0.1, 0.1, 0.25, 1),
+      }),
+    };
+  });
+  
+
 
   if(error) {
     return <ViewError />
   }
   
   return (
-    <Container>
+    <Container style={styleViewCard}>
       {loading ? (
         <Loading />
       ) : (

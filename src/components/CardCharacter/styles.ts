@@ -1,8 +1,7 @@
 import styled from 'styled-components/native'
+import Animated from 'react-native-reanimated';
 
-export const CardContainer = styled.TouchableOpacity.attrs({
-  activeOpacity: 1
-})`
+export const CardContainer = styled(Animated.View)`
   align-items: center;
   margin-left: 4px;
   margin-right: 4px;

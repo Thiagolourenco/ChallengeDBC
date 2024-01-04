@@ -2,8 +2,8 @@ import React, { useEffect } from 'react'
 import { View, FlatList } from 'react-native'
 
 import { CardCharacter, Loading, ViewError } from '../../components'
-
 import useCharactersStore from '../../store/characters'
+import { Container } from './styles'
 
 
 const Home = (): JSX.Element => {
@@ -20,7 +20,7 @@ const Home = (): JSX.Element => {
   }
   
   return (
-    <View style={{ flex: 1, backgroundColor: "#ffffff"}}>
+    <Container>
       {loading ? (
         <Loading />
       ) : (
@@ -37,7 +37,7 @@ const Home = (): JSX.Element => {
           }
         />
       ) }
-    </View>
+    </Container>
   )
 }
 

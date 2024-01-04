@@ -22,7 +22,8 @@ Para rodar o projeto, é preciso ter o yarn e node atualizdo
 
 ```bash
 # Clonar projeto
-git clone 
+SSH: git clone git@github.com:Thiagolourenco/ChallengeDBC.git
+HTTPS: 
 
 # Instale as dependências
 yarn install

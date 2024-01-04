@@ -2,11 +2,11 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import React, { useEffect } from 'react'
 import { View, Text } from 'react-native'
 
-import { Button, Loading } from '../../components'
+import { Button, Loading, ViewError } from '../../components'
 import useCharacterStore from '../../store/character'
 import { RouterListTypes } from '../../@types'
 
-import { Container, Image, Content, TextName, TextInfo, Row} from './styles'
+import { Container, Image, Content, TextName, TextInfo, Row } from './styles'
 
 type ProfileScreenRouteProp = RouteProp<RouterListTypes, 'Details'>;
 
@@ -19,6 +19,11 @@ const Details = () => {
   useEffect(() => {
     fetchCharacter(String(params.id))
   }, [])
+
+
+  if(error) {
+    return <ViewError />
+  }
   
   return (
     <Container>
@@ -35,6 +40,8 @@ const Details = () => {
               <TextInfo>Espécie: {data?.species}</TextInfo>
             </Row>
           
+            <TextInfo>Data de Criação {data?.created}</TextInfo>
+
             <TextInfo>Total de Epísodios: {data?.episode?.length}</TextInfo>
           </Content>
        

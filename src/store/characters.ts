@@ -1,28 +1,8 @@
 import { create } from "zustand";
 import client from "../services/client";
 import { gql } from "@apollo/client";
-
-export interface Character {
-  image: string;
-  id: string;
-  name: string;
-}
-
-interface CharactersData {
-  results: Character[];
-}
-
-interface CharactersDataResponse {
-  characters: CharactersData
-}
-
-type CharactersType = {
-  data: Character[]
-  loading: boolean
-  page: number
-  error: unknown
-  fetchCharacters: () => void
-}
+import { CharactersDataResponse } from "../@types/characters";
+import { CharactersType } from "../@types/store";
 
 const fetchData = async (page = 1) => {
   const { data, loading, error } = await client.query<CharactersDataResponse>({

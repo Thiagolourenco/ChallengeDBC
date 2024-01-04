@@ -1,13 +1,15 @@
 import React from 'react'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+import { useNavigation } from '@react-navigation/native'
+
+import Button from '../Button'
+import { RouterListTypes } from '../../@types'
 
 import { CardContainer, CardImage, CardText  } from './styles'
-import Button from '../Button'
-import { RouteProp, useNavigation } from '@react-navigation/native'
-import { NativeStackNavigationProp } from '@react-navigation/native-stack'
-import { RouterListTypes } from '../../@types'
-import { Character } from '../../store/characters'
+import { Characters } from '../../@types/characters'
 
-const CardCharacter = (item: Character) => {
+
+const CardCharacter = (item: Characters) => {
   const { navigate } = useNavigation<NativeStackNavigationProp<RouterListTypes, 'Details'>>()
 
   return (

@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, Text, SafeAreaView, ActivityIndicator, FlatList, Image } from 'react-native'
 
-import { Button, CardCharacter, Header, Loading } from '../../components'
+import { Button, CardCharacter, Loading } from '../../components'
 import { useQuery } from '@apollo/client'
 import { GetCharacters } from '../../graphql'
 
@@ -39,28 +39,41 @@ interface RickAndMortyApiResponse {
 
 const Home = (): JSX.Element => {
   const [page, setPage] = useState<number>(1)
+  const [characters, setCharacters] = useState<Character[]>([]);
 
   const { data, loading, error } = useQuery<RickAndMortyApiResponse>(GetCharacters, {
     variables: {
       page
     }
   })
+  
+  useEffect(() => {
+    if (data?.characters?.results) {
+      setCharacters((prevCharacters) => [...prevCharacters, ...data.characters.results]);
+    }
+  }, [data]);
+
+  const handleEndReached = () => setPage((prevPage) => prevPage + 1);
 
   return (
-    <SafeAreaView>
-      <Header title='Lista de Personagens' />
-
+    <View style={{ flex: 1, backgroundColor: "#ffffff"}}>
       {loading ? (
         <Loading />
       ) : (
         <FlatList 
           style={{ alignSelf: "center", marginLeft: 8 }}
           numColumns={2}
-          data={data?.characters?.results}
-          renderItem={({ item }) => <CardCharacter {...item} />}
+          data={characters}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item }) => <CardCharacter {...item} /> }
+          onEndReached={handleEndReached}
+          onEndReachedThreshold={0.1}
+          ListFooterComponent={() =>
+            loading ? <Loading /> : null
+          }
         />
       ) }
-    </SafeAreaView>
+    </View>
   )
 }
 

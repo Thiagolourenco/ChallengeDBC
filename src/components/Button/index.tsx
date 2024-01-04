@@ -4,11 +4,12 @@ import { ButtonView, ButtonViewText } from './styles'
 
 interface IButton {
   text: string
+  onPress: () => void
 }
 
-const Button = ({ text }: IButton) => {
+const Button = ({ text, onPress }: IButton) => {
   return (
-    <ButtonView>
+    <ButtonView onPress={onPress}>
       <ButtonViewText>{text}</ButtonViewText>
     </ButtonView>
   )

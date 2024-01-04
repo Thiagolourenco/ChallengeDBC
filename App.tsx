@@ -3,6 +3,8 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 
 
 import Home from "./src/pages/Home";
+import { NavigationContainer } from "@react-navigation/native";
+import Routes from "./src/routes";
 
 // TODO -> Configurar Appolo
 export default () => {
@@ -13,7 +15,9 @@ export default () => {
 
   return (
     <ApolloProvider client={client}>
-      <Home />
+      <NavigationContainer>
+        <Routes />
+      </NavigationContainer>
     </ApolloProvider>
   )
 }

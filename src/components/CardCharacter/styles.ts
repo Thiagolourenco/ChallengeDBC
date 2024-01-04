@@ -1,6 +1,8 @@
 import styled from 'styled-components/native'
 
-export const CardContainer = styled.View`
+export const CardContainer = styled.TouchableOpacity.attrs({
+  activeOpacity: 1
+})`
   align-items: center;
   margin-left: 4px;
   margin-right: 4px;

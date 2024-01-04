@@ -4,56 +4,17 @@ import { View, Text, SafeAreaView, ActivityIndicator, FlatList, Image } from 're
 import { Button, CardCharacter, Loading } from '../../components'
 import { useQuery } from '@apollo/client'
 import { GetCharacters } from '../../graphql'
-
-interface Location {
-  id: string;
-  name: string;
-}
-
-interface Origin {
-  id: string | null;
-  name: string;
-}
-
-export interface Character {
-  gender: string;
-  created: string;
-  image: string;
-  id: string;
-  name: string;
-  species: string;
-  status: string;
-  type: string;
-  location: Location;
-  origin: Origin;
-}
-
-interface CharactersData {
-  results: Character[];
-}
-
-interface RickAndMortyApiResponse {
-  characters: CharactersData;
-}
+import useCharactersStore from '../../store/characters'
 
 
 const Home = (): JSX.Element => {
-  const [page, setPage] = useState<number>(1)
-  const [characters, setCharacters] = useState<Character[]>([]);
-
-  const { data, loading, error } = useQuery<RickAndMortyApiResponse>(GetCharacters, {
-    variables: {
-      page
-    }
-  })
+  const { fetchCharacters, data, loading, error } = useCharactersStore()
   
   useEffect(() => {
-    if (data?.characters?.results) {
-      setCharacters((prevCharacters) => [...prevCharacters, ...data.characters.results]);
-    }
+    fetchCharacters()
   }, [data]);
 
-  const handleEndReached = () => setPage((prevPage) => prevPage + 1);
+  const handleEndReached = () => fetchCharacters();
 
   return (
     <View style={{ flex: 1, backgroundColor: "#ffffff"}}>
@@ -63,7 +24,7 @@ const Home = (): JSX.Element => {
         <FlatList 
           style={{ alignSelf: "center", marginLeft: 8 }}
           numColumns={2}
-          data={characters}
+          data={data}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => <CardCharacter {...item} /> }
           onEndReached={handleEndReached}

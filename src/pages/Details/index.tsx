@@ -1,32 +1,32 @@
-import { useQuery } from '@apollo/client'
 import { useRoute } from '@react-navigation/native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { View, Text, Image } from 'react-native'
 
-import { GetCharactersID } from '../../graphql'
-import { Character } from '../Home'
 import { Loading } from '../../components'
+import useCharacterStore from '../../store/character'
 
 const Details = () => {
   const { params } = useRoute()
+  const { data, error, fetchCharacter, loading } = useCharacterStore()
 
   console.log("params", params)
-  const { data, loading, error} = useQuery<any>(GetCharactersID, { variables: {characterId: String(params.id)}})
  
-  console.log("DAta", data)
-  console.log("ERrro",error)
+  useEffect(() => {
+    fetchCharacter(String(params.id))
+  }, [])
+  
   return (
     <View style={{  alignItems: "center", backgroundColor: "#ffffff", flex: 1}}>
       {loading ? (
         <Loading />
       ) : (
         <>
-          <Image source={{ uri: data?.character.image}} style={{ height: 300, width: 300, borderRadius: 8, marginTop: 16 }}  />
-          <Text>{data?.character.name}</Text>
-          <Text>Localização: {data?.character.location.name}</Text>
-          <Text>status: {data?.character.status}</Text>
-          <Text>espécie: {data?.character.species}</Text>
-          <Text>Total de Epísodios: {data?.character.episode.length}</Text>
+          <Image source={{ uri: data?.image}} style={{ height: 300, width: 300, borderRadius: 8, marginTop: 16 }}  />
+          <Text>{data?.name}</Text>
+          <Text>Localização: {data?.location.name}</Text>
+          <Text>status: {data?.status}</Text>
+          <Text>espécie: {data?.species}</Text>
+          <Text>Total de Epísodios: {data?.episode.length}</Text>
         </>
       )}
  
